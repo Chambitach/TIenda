@@ -6,11 +6,27 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace TIenda.Migrations
 {
     /// <inheritdoc />
-    public partial class FixCascadeDelete : Migration
+    public partial class AgregarTablas : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "DetallesPedido",
+                columns: table => new
+                {
+                    IdDetalle = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    IdPedido = table.Column<int>(type: "int", nullable: false),
+                    IdProducto = table.Column<int>(type: "int", nullable: false),
+                    Cantidad = table.Column<int>(type: "int", nullable: false),
+                    PrecioUnitario = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DetallesPedido", x => x.IdDetalle);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Pedidos",
                 columns: table => new
@@ -56,44 +72,6 @@ namespace TIenda.Migrations
                 {
                     table.PrimaryKey("PK_Usuarios", x => x.IdUsuario);
                 });
-
-            migrationBuilder.CreateTable(
-                name: "DetallesPedido",
-                columns: table => new
-                {
-                    IdDetalle = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    IdPedido = table.Column<int>(type: "int", nullable: false),
-                    IdProducto = table.Column<int>(type: "int", nullable: false),
-                    Cantidad = table.Column<int>(type: "int", nullable: false),
-                    PrecioUnitario = table.Column<decimal>(type: "DECIMAL(18,2)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_DetallesPedido", x => x.IdDetalle);
-                    table.ForeignKey(
-                        name: "FK_DetallesPedido_Pedidos_IdPedido",
-                        column: x => x.IdPedido,
-                        principalTable: "Pedidos",
-                        principalColumn: "IdPedido",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_DetallesPedido_Productos_IdProducto",
-                        column: x => x.IdProducto,
-                        principalTable: "Productos",
-                        principalColumn: "IdProducto",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_DetallesPedido_IdPedido",
-                table: "DetallesPedido",
-                column: "IdPedido");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_DetallesPedido_IdProducto",
-                table: "DetallesPedido",
-                column: "IdProducto");
         }
 
         /// <inheritdoc />
@@ -103,13 +81,13 @@ namespace TIenda.Migrations
                 name: "DetallesPedido");
 
             migrationBuilder.DropTable(
-                name: "Usuarios");
-
-            migrationBuilder.DropTable(
                 name: "Pedidos");
 
             migrationBuilder.DropTable(
                 name: "Productos");
+
+            migrationBuilder.DropTable(
+                name: "Usuarios");
         }
     }
 }

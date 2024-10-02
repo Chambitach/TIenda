@@ -12,8 +12,8 @@ using TIenda.Models;
 namespace TIenda.Migrations
 {
     [DbContext(typeof(TiendaContext))]
-    [Migration("20240926235415_NombreDeLaMigracion")]
-    partial class NombreDeLaMigracion
+    [Migration("20241001042320_AgregarTablas")]
+    partial class AgregarTablas
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -34,7 +34,7 @@ namespace TIenda.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdDetalle"));
 
                     b.Property<int>("Cantidad")
-                        .HasColumnType("INT");
+                        .HasColumnType("int");
 
                     b.Property<int>("IdPedido")
                         .HasColumnType("int");
@@ -43,7 +43,7 @@ namespace TIenda.Migrations
                         .HasColumnType("int");
 
                     b.Property<decimal>("PrecioUnitario")
-                        .HasColumnType("DECIMAL(18,2)");
+                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("IdDetalle");
 
